@@ -8,4 +8,12 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_refresh"
+        android:orderInCategory="99"
+        android:icon="@drawable/ic_cached_white_24dp"
+        android:title="Refresh"
+        app:showAsAction="always"
+        />
+
 </menu>

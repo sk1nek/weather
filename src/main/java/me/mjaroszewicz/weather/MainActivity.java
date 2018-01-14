@@ -10,12 +10,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
     private LocationService locationService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +27,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final Button btn = findViewById(R.id.main_button);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
 
-                String address = locationService.reverseGeocode();
-                btn.setText(address);
 
-            }
-        });
+
     }
 
     @Override
@@ -59,6 +54,15 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.action_refresh){
+            refreshData();
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void refreshData(){
+        TextView locationTextView = findViewById(R.id.main_location);
+        locationTextView.setText(locationService.reverseGeocode());
     }
 }
