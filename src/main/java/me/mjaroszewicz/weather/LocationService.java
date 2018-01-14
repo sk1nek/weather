@@ -26,6 +26,8 @@ public class LocationService {
 
     private final Activity context;
 
+    private static SharedPreferences sharedPreferences;
+
     LocationService(Activity context) {
         this.context = context;
         init();
@@ -33,6 +35,7 @@ public class LocationService {
 
     private void init(){
         API_KEY = context.getResources().getString(R.string.google_maps_key);
+        sharedPreferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
     }
 
     /**
@@ -42,10 +45,9 @@ public class LocationService {
      */
     public String reverseGeocode(){
 
-        SharedPreferences sp = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
 
-        String lat = sp.getString("location_latitude", DEFAULT_LAT);
-        String lng = sp.getString("location_longitude", DEFAULT_LNG);
+        String lat = sharedPreferences.getString("location_latitude", DEFAULT_LAT);
+        String lng = sharedPreferences.getString("location_longitude", DEFAULT_LNG);
 
         StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/geocode/json?");
         sb.append("latlng=")
@@ -97,6 +99,12 @@ public class LocationService {
 
     }
 
+    public String getLat(){
+        return sharedPreferences.getString("location_latitude", DEFAULT_LAT);
+    }
 
+    public String getLng(){
+        return sharedPreferences.getString("location_longtitude", DEFAULT_LNG);
+    }
 
 }

@@ -36,4 +36,14 @@
         android:textColor="#fff"
         android:textSize="24sp" />
 
+    <TextView
+        android:id="@+id/main_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/main_location"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="39dp"
+        android:text="TextView"
+        android:textColor="#fff" />
+
 </RelativeLayout>

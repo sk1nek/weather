@@ -1,6 +1,5 @@
 package me.mjaroszewicz.weather;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,33 +7,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
     private LocationService locationService;
 
+    private WeatherService weatherService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.locationService = new LocationService(this);
+        this.weatherService = new WeatherService(locationService, this);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -55,14 +49,34 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_refresh){
-            refreshData();
+            updateData();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void refreshData(){
+    private void updateData(){
         TextView locationTextView = findViewById(R.id.main_location);
         locationTextView.setText(locationService.reverseGeocode());
+
+        AsyncTask<Void, Void, Weather> weatherTask = new AsyncTask<Void, Void, Weather>() {
+            @Override
+            protected Weather doInBackground(Void... voids) {
+                return weatherService.getCurrentWeather();
+            }
+        };
+        weatherTask.execute();
+        Weather currentWeather;
+        try{
+            currentWeather = weatherTask.get();
+            TextView tempTextView = findViewById(R.id.main_temp);
+            tempTextView.setText(currentWeather.getDescription());
+
+        }catch (Throwable t){
+            t.printStackTrace();
+        }
+
+
     }
+
 }

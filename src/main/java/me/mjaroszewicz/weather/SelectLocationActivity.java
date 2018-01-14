@@ -40,7 +40,6 @@ public class SelectLocationActivity extends FragmentActivity implements OnMapRea
             @Override
             public void onMapLongClick(LatLng latLng) {
 
-
                 resultIntent.putExtra("lat", latLng.latitude);
                 resultIntent.putExtra("lng", latLng.longitude);
 

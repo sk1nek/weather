@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="openweather_api_key" translatable="false" formatted="false">89d62fe6d7aa1e878e2e07f037a9fd0d</string>
+
+</resources>
