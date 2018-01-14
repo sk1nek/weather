@@ -1,7 +1,9 @@
 package me.mjaroszewicz.weather;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -65,6 +67,9 @@ public class SettingsFragment extends PreferenceFragment {
 
             Toast.makeText(getActivity(), extras.getDouble("lat") + "  " + extras.getDouble("lng"), Toast.LENGTH_LONG).show();
 
+            SharedPreferences sp = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+            sp.edit().putString("location_lattitude", Double.toString(extras.getDouble("lat"))).putString("location_longtitude", Double.toString(extras.getDouble("lng"))).apply();
         }
 
 
