@@ -67,9 +67,9 @@ public class SettingsFragment extends PreferenceFragment {
 
             Toast.makeText(getActivity(), extras.getDouble("lat") + "  " + extras.getDouble("lng"), Toast.LENGTH_LONG).show();
 
-            SharedPreferences sp = getActivity().getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences sp = getActivity().getSharedPreferences("settings", Context.MODE_PRIVATE);
 
-            sp.edit().putString("location_lattitude", Double.toString(extras.getDouble("lat"))).putString("location_longtitude", Double.toString(extras.getDouble("lng"))).apply();
+            sp.edit().putString("location_latitude", Double.toString(extras.getDouble("lat"))).putString("location_longitude", Double.toString(extras.getDouble("lng"))).apply();
         }
 
 
