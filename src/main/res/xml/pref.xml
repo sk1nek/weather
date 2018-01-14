@@ -5,10 +5,6 @@
     <PreferenceCategory android:key="CUSTOM_FRAG"
         android:title="Options">
 
-        <SwitchPreference android:key="check"
-            android:title="title"/>
-
-
     </PreferenceCategory>
 
 </PreferenceScreen>
