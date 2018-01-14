@@ -93,7 +93,7 @@ public class LocationService {
 
 
         if(formattedAddresses.size() >= 2)
-            return formattedAddresses.get(0);
+            return formattedAddresses.get(2);
         else
             return formattedAddresses.get(formattedAddresses.size() - 1);
 
