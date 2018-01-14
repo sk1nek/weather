@@ -1,7 +1,5 @@
 package me.mjaroszewicz.weather;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -60,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }
