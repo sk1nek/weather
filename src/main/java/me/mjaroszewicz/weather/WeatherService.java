@@ -2,6 +2,7 @@ package me.mjaroszewicz.weather;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -40,6 +41,8 @@ public class WeatherService {
                 .append(lng)
                 .append("&appid=")
                 .append(API_KEY);
+
+        Log.w("URL", sb.toString() + " ");
 
         String json = Utils.getStringFromUrl(sb.toString());
 

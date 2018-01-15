@@ -23,25 +23,50 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <TextView
-        android:id="@+id/main_location"
+    <ImageView
+        android:id="@+id/main_icon_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/appBarLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="18dp"
+        android:adjustViewBounds="false"
+        android:tint="#fff"
+        android:visibility="visible"
+        app:srcCompat="@drawable/ic_01d" />
+
+    <TextView
+        android:id="@+id/main_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_icon_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Large"
         android:textColor="#fff"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        tools:text="hahaha" />
 
     <TextView
         android:id="@+id/main_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/main_location"
+        android:layout_below="@+id/main_icon_view"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="39dp"
-        android:textColor="#fff" />
+        android:layout_marginTop="11dp"
+        android:textColor="#fff"
+        android:textSize="30sp"
+        tools:text="hahaha" />
+
+    <TextView
+        android:id="@+id/main_weather_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_location"
+        android:layout_centerHorizontal="true"
+        android:textColor="#fff"
+        tools:text="sunny" />
+
 
 </RelativeLayout>

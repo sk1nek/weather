@@ -104,7 +104,7 @@ public class LocationService {
     }
 
     public String getLng(){
-        return sharedPreferences.getString("location_longtitude", DEFAULT_LNG);
+        return sharedPreferences.getString("location_longitude", DEFAULT_LNG);
     }
 
 }
