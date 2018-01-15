@@ -26,9 +26,11 @@ public class SettingsFragment extends PreferenceFragment {
 
         PreferenceScreen pc = getPreferenceScreen();
 
-        Preference p = buildLocationPreference(getActivity());
-        pc.addPreference(p);
+        Preference locationPreference = buildLocationPreference(getActivity());
+        pc.addPreference(locationPreference);
 
+        Preference temperatureScalePreference = buildTemperaturePreference(getActivity());
+        pc.addPreference(temperatureScalePreference);
 
         this.setPreferenceScreen(pc);
         this.setHasOptionsMenu(true);
@@ -56,6 +58,42 @@ public class SettingsFragment extends PreferenceFragment {
         });
 
         return ret;
+    }
+
+    private Preference buildTemperaturePreference(final Activity activity){
+
+        final Preference ret = new Preference(activity);
+
+        final SharedPreferences sharedPreferences = activity.getSharedPreferences("settings", Context.MODE_PRIVATE);
+
+        ret.setTitle("Temperature scale");
+
+        String temperatureScale = sharedPreferences.getString("temperature_scale", "Fahrenheit");
+
+        ret.setSummary(temperatureScale);
+
+        ret.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                String temperatureScale = sharedPreferences.getString("temperature_scale", "Fahrenheit");
+
+                if(temperatureScale.equals("Fahrenheit"))
+                    temperatureScale = "Celsius";
+                else
+                    temperatureScale = "Fahrenheit";
+
+                sharedPreferences.edit().putString("temperature_scale", temperatureScale).apply();
+
+                ret.setSummary("                         ");
+                ret.setSummary(temperatureScale);
+
+                return true;
+            }
+        });
+
+        return ret;
+
     }
 
     @Override
