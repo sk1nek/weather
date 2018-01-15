@@ -85,13 +85,11 @@ public class MainActivity extends AppCompatActivity {
         try{
             currentWeather = weatherTask.get();
             TextView tempTextView = findViewById(R.id.main_temp);
-
-
             tempTextView.setText(getTemperatureString(currentWeather, sharedPreferences.getString("temperature_scale", "celsius")));
 
         }catch (Throwable t){
             t.printStackTrace();
-            Toast.makeText(this, "Error has occured during data fetch. \nTry again later.", Toast.LENGTH_LONG);
+            Toast.makeText(this, "Error has occured during data fetch. \nTry again later.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -109,6 +107,14 @@ public class MainActivity extends AppCompatActivity {
         String first = description.substring(0, 1);
         description = first.toUpperCase() + description.substring(1);
         weatherDescriptionTextView.setText(description);
+
+        TextView atmosphericPressureTextView = findViewById(R.id.main_weather_pressure);
+        String pressureText = "Pressure: " + (int) currentWeather.getPressure() + " hPa";
+        atmosphericPressureTextView.setText(pressureText);
+
+        TextView humidityTextView = findViewById(R.id.main_weather_humidity);
+        String humidityText = "Humidity: " + currentWeather.getHumidity() + "%";
+        humidityTextView.setText(humidityText);
 
     }
 

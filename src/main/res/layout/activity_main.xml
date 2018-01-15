@@ -8,6 +8,16 @@
     android:background="@color/colorPrimary"
     tools:context="me.mjaroszewicz.weather.MainActivity">
 
+    <TextView
+        android:id="@+id/main_weather_pressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_weather_description"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        tools:text="Pressure: 1005hPa" />
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,6 +77,16 @@
         android:layout_centerHorizontal="true"
         android:textColor="#fff"
         tools:text="sunny" />
+
+    <TextView
+        android:id="@+id/main_weather_humidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_weather_pressure"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        tools:text="Humidity: 55%" />
 
 
 </RelativeLayout>
