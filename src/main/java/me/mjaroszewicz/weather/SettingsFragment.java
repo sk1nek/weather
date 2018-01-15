@@ -53,6 +53,8 @@ public class SettingsFragment extends PreferenceFragment {
                 Intent i = new Intent(activity, SelectLocationActivity.class);
                 startActivityForResult(i, SELECT_LOCATION_ACTION);
 
+                MainActivity.getInstance().updateData();
+
                 return true;
             }
         });
@@ -87,6 +89,8 @@ public class SettingsFragment extends PreferenceFragment {
 
                 ret.setSummary("                         ");
                 ret.setSummary(temperatureScale);
+
+                MainActivity.getInstance().updateData();
 
                 return true;
             }

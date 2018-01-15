@@ -1,5 +1,6 @@
 package me.mjaroszewicz.weather;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -22,12 +23,15 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
 
+    private static MainActivity instance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.locationService = new LocationService(this);
         this.weatherService = new WeatherService(locationService, this);
         this.sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE);
+        instance = this;
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -66,11 +70,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void updateData(){
+    void updateData(){
         TextView locationTextView = findViewById(R.id.main_location);
         locationTextView.setText(locationService.reverseGeocode());
 
-        AsyncTask<Void, Void, Weather> weatherTask = new AsyncTask<Void, Void, Weather>() {
+        @SuppressLint("StaticFieldLeak") AsyncTask<Void, Void, Weather> weatherTask = new AsyncTask<Void, Void, Weather>() {
             @Override
             protected Weather doInBackground(Void... voids) {
                 return weatherService.getCurrentWeather();
@@ -127,6 +131,10 @@ public class MainActivity extends AppCompatActivity {
                 return (int)(w.getTemperature() - 273.6) + "°C";
         }
 
+    }
+
+    static MainActivity getInstance(){
+        return instance;
     }
 
 }
