@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private int celsiusToF(double temp){
 
         return (int) (32 + temp * 1.8);

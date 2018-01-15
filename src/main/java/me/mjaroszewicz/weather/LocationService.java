@@ -92,8 +92,18 @@ public class LocationService {
         }
 
 
-        if(formattedAddresses.size() >= 2)
-            return formattedAddresses.get(2);
+        if(formattedAddresses.size() >= 2) {
+            String ret = formattedAddresses.get(2);
+            int i = 2;
+
+            while (ret.length() > 20 && i < formattedAddresses.size()) {
+                i++;
+                ret = formattedAddresses.get(i);
+            }
+
+            return ret;
+
+        }
         else
             return formattedAddresses.get(formattedAddresses.size() - 1);
 
