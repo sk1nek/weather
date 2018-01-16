@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -54,9 +56,11 @@ public class ForecastRecyclerAdapter extends RecyclerView.Adapter<ForecastViewHo
 
         //time
         long time = w.getTime();
-        Date date = new Date(time);
+        Date date = new Date(time * 1000);
         String timeString = date.getHours() + ":00";
         holder.timeTextView.setText(timeString);
+
+        Log.w("DATETIME", time + " ");
 
         //temperature
         SharedPreferences sharedPreferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
