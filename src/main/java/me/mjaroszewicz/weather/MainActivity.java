@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 public class MainActivity extends AppCompatActivity {
 
     private LocationService locationService;
@@ -39,10 +42,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //wip - recyclerview
-        RecyclerView recyclerView = findViewById(R.id.main_recycler);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
 
 
         updateData();
@@ -122,6 +121,28 @@ public class MainActivity extends AppCompatActivity {
         TextView humidityTextView = findViewById(R.id.main_weather_humidity);
         String humidityText = "Humidity: " + currentWeather.getHumidity() + "%";
         humidityTextView.setText(humidityText);
+
+        @SuppressLint("StaticFieldLeak") AsyncTask<Void, Void, List<Weather>> downloadForecastTask = new AsyncTask<Void, Void, List<Weather>>() {
+            @Override
+            protected List<Weather> doInBackground(Void... voids) {
+                return weatherService.getFiveDayForecast();
+            }
+        };
+        downloadForecastTask.execute();
+
+        ForecastRecyclerAdapter forecastRecyclerAdapter = null;
+        try {
+
+            forecastRecyclerAdapter = new ForecastRecyclerAdapter(this, downloadForecastTask.get());
+        } catch (Throwable t){
+            t.printStackTrace();
+            return;
+        }
+        RecyclerView recyclerView = findViewById(R.id.main_recycler);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(forecastRecyclerAdapter);
+
 
     }
 

@@ -7,6 +7,10 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Created by admin on 1/14/18.
  */
@@ -26,7 +30,6 @@ public class WeatherService {
 
     }
 
-
     Weather getCurrentWeather(){
 
         String lat = locationService.getLat();
@@ -42,7 +45,6 @@ public class WeatherService {
                 .append("&appid=")
                 .append(API_KEY);
 
-        Log.w("URL", sb.toString() + " ");
 
         String json = Utils.getStringFromUrl(sb.toString());
 
@@ -85,16 +87,64 @@ public class WeatherService {
         return ret;
     }
 
-    private Weather getWeatherFromJson(JSONObject jsonObject){
+    /**
+     * Method that calls API for 5-day weather forecast and parses only few details, leaving many variables null.
+     * @return List of forecasts with 3-hour intervals.
+     */
+    List<Weather> getFiveDayForecast(){
 
-        Weather ret = new Weather();
+        String lat = locationService.getLat();
+        String lng = locationService.getLng();
 
+        StringBuilder sb = new StringBuilder("http://api.openweathermap.org/data/2.5/forecast?");
+
+        sb
+                .append("lat=")
+                .append(lat)
+                .append("&lon=")
+                .append(lng)
+                .append("&appid=")
+                .append(API_KEY);
+
+        List<Weather> ret = new ArrayList<>();
+
+        String json = Utils.getStringFromUrl(sb.toString());
+
+        //parsing
+        try{
+            JSONObject root = new JSONObject(json);
+            JSONArray array = root.getJSONArray("list");
+
+            for(int i = 0 ; i < array.length(); i++){
+
+                Weather w = new Weather();
+
+                JSONObject listItem = array.getJSONObject(i);
+
+                w.setTime(listItem.getLong("dt"));
+
+                JSONObject obj = listItem.getJSONObject("main");
+
+                w.setTemperature(obj.getDouble("temp"));
+                w.setPressure(obj.getDouble("pressure"));
+                w.setHumidity(obj.getInt("humidity"));
+
+                JSONArray arr = listItem.getJSONArray("weather");
+                obj = arr.getJSONObject(0);
+
+                w.setId(obj.getInt("id"));
+                w.setDescription(obj.getString("description"));
+                w.setIcon(obj.getString("icon"));
+
+                ret.add(w);
+            }
+
+        }catch(Throwable t){
+            t.printStackTrace();
+        }
 
         return ret;
-
     }
-
-
 
 
 }
