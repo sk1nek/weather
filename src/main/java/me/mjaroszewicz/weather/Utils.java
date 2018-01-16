@@ -5,10 +5,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-/**
- * Created by admin on 1/14/18.
- */
-
 public class Utils {
 
     static String getStringFromUrl(String address){

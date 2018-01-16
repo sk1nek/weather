@@ -11,10 +11,6 @@ import android.preference.PreferenceScreen;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
-/**
- * Created by admin on 1/13/18.
- */
-
 public class SettingsFragment extends PreferenceFragment {
 
     final private int SELECT_LOCATION_ACTION = 12321;

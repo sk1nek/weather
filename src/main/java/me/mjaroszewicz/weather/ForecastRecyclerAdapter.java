@@ -11,13 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by admin on 1/16/18.
- */
+
 
 public class ForecastRecyclerAdapter extends RecyclerView.Adapter<ForecastViewHolder> {
 
@@ -37,9 +34,8 @@ public class ForecastRecyclerAdapter extends RecyclerView.Adapter<ForecastViewHo
     public ForecastViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = layoutInflater.inflate(R.layout.forecast_recycler_item, parent, false);
-        ForecastViewHolder holder = new ForecastViewHolder(v);
 
-        return holder;
+        return new ForecastViewHolder(v);
     }
 
     //binding data to the view
@@ -79,8 +75,6 @@ public class ForecastRecyclerAdapter extends RecyclerView.Adapter<ForecastViewHo
 }
 
 class ForecastViewHolder extends RecyclerView.ViewHolder{
-
-    View mView;
 
 
     ImageView iconImageView;

@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -130,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         };
         downloadForecastTask.execute();
 
-        ForecastRecyclerAdapter forecastRecyclerAdapter = null;
+        ForecastRecyclerAdapter forecastRecyclerAdapter;
         try {
 
             forecastRecyclerAdapter = new ForecastRecyclerAdapter(this, downloadForecastTask.get());

@@ -12,10 +12,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * Created by admin on 1/14/18.
- */
-
 public class LocationService {
 
     private final String DEFAULT_LAT = "40.7142205";

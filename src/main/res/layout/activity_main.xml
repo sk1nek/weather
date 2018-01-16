@@ -56,7 +56,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Large"
         android:textColor="#fff"
         android:textSize="24sp"
-        tools:text="hahaha" />
+        tools:text="location" />
 
     <TextView
         android:id="@+id/main_temp"
@@ -67,7 +67,7 @@
         android:layout_marginTop="11dp"
         android:textColor="#fff"
         android:textSize="30sp"
-        tools:text="hahaha" />
+        tools:text="temperature" />
 
     <TextView
         android:id="@+id/main_weather_description"

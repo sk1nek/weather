@@ -1,19 +1,12 @@
 package me.mjaroszewicz.weather;
 
 import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-/**
- * Created by admin on 1/14/18.
- */
 
 public class WeatherService {
 
@@ -48,7 +41,7 @@ public class WeatherService {
 
         String json = Utils.getStringFromUrl(sb.toString());
 
-        Weather ret = null;
+        Weather ret;
 
         try{
             ret = new Weather();
