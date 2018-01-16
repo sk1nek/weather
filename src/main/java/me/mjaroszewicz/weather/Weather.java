@@ -8,6 +8,8 @@ public class Weather {
 
     private int id;
 
+    private long time;
+
     private String description;
 
     private String icon;
@@ -40,6 +42,14 @@ public class Weather {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 
     public String getDescription() {

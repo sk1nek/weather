@@ -33,4 +33,25 @@ public class Utils {
 
         return s;
     }
+
+    private static int celsiusToF(double temp){
+
+        return (int) (32 + temp * 1.8);
+    }
+
+    static public String getTemperatureString(Weather w, String type){
+
+        type = type.toLowerCase();
+
+        switch (type) {
+            case "kelvin":
+                return w.getTemperature() + "K";
+            case "fahrenheit":
+                return celsiusToF(w.getTemperature() - 273.6) + "°F";
+            default:
+                return (int)(w.getTemperature() - 273.6) + "°C";
+        }
+
+    }
+
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+
+    >
+
+    <ImageView
+        android:id="@+id/forecast_recycler_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tint="#fff"
+        app:srcCompat="@drawable/ic_01d"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="12C"
+        android:id="@+id/forecast_recycler_temp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forecast_recycler_time"
+        tools:text="12AM"
+
+        />
+
+
+</RelativeLayout>

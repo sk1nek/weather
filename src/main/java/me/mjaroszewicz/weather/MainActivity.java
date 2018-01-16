@@ -7,6 +7,8 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -36,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //wip - recyclerview
+        RecyclerView recyclerView = findViewById(R.id.main_recycler);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
 
         updateData();
@@ -85,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         try{
             currentWeather = weatherTask.get();
             TextView tempTextView = findViewById(R.id.main_temp);
-            tempTextView.setText(getTemperatureString(currentWeather, sharedPreferences.getString("temperature_scale", "celsius")));
+            tempTextView.setText(Utils.getTemperatureString(currentWeather, sharedPreferences.getString("temperature_scale", "celsius")));
 
         }catch (Throwable t){
             t.printStackTrace();
@@ -119,25 +126,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private int celsiusToF(double temp){
 
-        return (int) (32 + temp * 1.8);
-    }
 
-    private String getTemperatureString(Weather w, String type){
-
-        type = type.toLowerCase();
-
-        switch (type) {
-            case "kelvin":
-                return w.getTemperature() + "K";
-            case "fahrenheit":
-                return celsiusToF(w.getTemperature() - 273.6) + "°F";
-            default:
-                return (int)(w.getTemperature() - 273.6) + "°C";
-        }
-
-    }
 
     static MainActivity getInstance(){
         return instance;

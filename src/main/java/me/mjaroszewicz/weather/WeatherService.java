@@ -85,6 +85,15 @@ public class WeatherService {
         return ret;
     }
 
+    private Weather getWeatherFromJson(JSONObject jsonObject){
+
+        Weather ret = new Weather();
+
+
+        return ret;
+
+    }
+
 
 
 
