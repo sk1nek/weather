@@ -48,22 +48,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         updateData();
-
-        executorService.scheduleAtFixedRate(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        if((System.currentTimeMillis() - lastUpdateTimeMilis) > 1000 * 60 * 50)
-                            updateData();
-                    }
-                },
-                0, 10, TimeUnit.MINUTES
-
-        );
+        initUpdateExecutor();
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -73,12 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent i = new Intent(this, SettingsActivity.class);
             startActivity(i);
@@ -97,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
         TextView locationTextView = findViewById(R.id.main_location);
         locationTextView.setText(locationService.reverseGeocode());
 
-        @SuppressLint("StaticFieldLeak") AsyncTask<Void, Void, Weather> weatherTask = new AsyncTask<Void, Void, Weather>() {
+        @SuppressLint("StaticFieldLeak")
+        AsyncTask<Void, Void, Weather> weatherTask = new AsyncTask<Void, Void, Weather>() {
             @Override
             protected Weather doInBackground(Void... voids) {
                 return weatherService.getCurrentWeather();
@@ -149,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
 
         ForecastRecyclerAdapter forecastRecyclerAdapter;
         try {
-
             forecastRecyclerAdapter = new ForecastRecyclerAdapter(this, downloadForecastTask.get());
         } catch (Throwable t) {
             t.printStackTrace();
@@ -163,6 +148,22 @@ public class MainActivity extends AppCompatActivity {
         lastUpdateTimeMilis = System.currentTimeMillis();
 
     }
+
+    private void initUpdateExecutor(){
+        executorService.scheduleAtFixedRate(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        if((System.currentTimeMillis() - lastUpdateTimeMilis) > 1000 * 60 * 50)
+                            updateData();
+                    }
+                },
+                0, 10, TimeUnit.MINUTES
+
+        );
+    }
+
+
 
 
     static MainActivity getInstance() {

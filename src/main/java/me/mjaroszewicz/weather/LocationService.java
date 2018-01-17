@@ -11,6 +11,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class LocationService {
 
@@ -72,22 +74,39 @@ public class LocationService {
             Log.w("ERROR", t.getLocalizedMessage() + " ");
         }
 
-        ArrayList<String> formattedAddresses = new ArrayList<>();
+        List<String> formattedAddresses = parseFormattedAddresses(query);
 
+        return selectFormattedAddress(formattedAddresses);
+    }
+
+    public String getLat(){
+        return sharedPreferences.getString("location_latitude", DEFAULT_LAT);
+    }
+
+    public String getLng(){
+        return sharedPreferences.getString("location_longitude", DEFAULT_LNG);
+    }
+
+    private List<String> parseFormattedAddresses(String json) {
+
+        ArrayList<String> ret = new ArrayList<>();
 
         try {
-            JSONObject jsonObject = new JSONObject(query);
+            JSONObject jsonObject = new JSONObject(json);
             JSONArray results = jsonObject.getJSONArray("results");
 
-            for(int i = 0 ; i < results.length(); i++)
-                formattedAddresses.add(results.getJSONObject(i).getString("formatted_address"));
+            for (int i = 0; i < results.length(); i++)
+                ret.add(results.getJSONObject(i).getString("formatted_address"));
 
         } catch (Throwable t) {
             t.printStackTrace();
-            return null;
+            return Collections.emptyList();
         }
 
+        return ret;
+    }
 
+    private String selectFormattedAddress(List<String> formattedAddresses){
         if(formattedAddresses.size() >= 2) {
             String ret = formattedAddresses.get(2);
             int i = 2;
@@ -102,15 +121,6 @@ public class LocationService {
         }
         else
             return formattedAddresses.get(formattedAddresses.size() - 1);
-
-    }
-
-    public String getLat(){
-        return sharedPreferences.getString("location_latitude", DEFAULT_LAT);
-    }
-
-    public String getLng(){
-        return sharedPreferences.getString("location_longitude", DEFAULT_LNG);
     }
 
 }
