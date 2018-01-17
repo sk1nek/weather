@@ -18,6 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
 
     private static MainActivity instance;
+
+    private static Long lastUpdateTimeMilis = System.currentTimeMillis();
+
+    private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +49,19 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-
         updateData();
+
+        executorService.scheduleAtFixedRate(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        if((System.currentTimeMillis() - lastUpdateTimeMilis) > 1000 * 60 * 50)
+                            updateData();
+                    }
+                },
+                0, 10, TimeUnit.MINUTES
+
+        );
 
     }
 
@@ -68,14 +86,14 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        if (id == R.id.action_refresh){
+        if (id == R.id.action_refresh) {
             updateData();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    void updateData(){
+    void updateData() {
         TextView locationTextView = findViewById(R.id.main_location);
         locationTextView.setText(locationService.reverseGeocode());
 
@@ -87,12 +105,12 @@ public class MainActivity extends AppCompatActivity {
         };
         weatherTask.execute();
         Weather currentWeather;
-        try{
+        try {
             currentWeather = weatherTask.get();
             TextView tempTextView = findViewById(R.id.main_temp);
             tempTextView.setText(Utils.getTemperatureString(currentWeather, sharedPreferences.getString("temperature_scale", "celsius")));
 
-        }catch (Throwable t){
+        } catch (Throwable t) {
             t.printStackTrace();
             Toast.makeText(this, "Error has occured during data fetch. \nTry again later.", Toast.LENGTH_LONG).show();
             return;
@@ -133,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             forecastRecyclerAdapter = new ForecastRecyclerAdapter(this, downloadForecastTask.get());
-        } catch (Throwable t){
+        } catch (Throwable t) {
             t.printStackTrace();
             return;
         }
@@ -142,14 +160,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(forecastRecyclerAdapter);
 
+        lastUpdateTimeMilis = System.currentTimeMillis();
 
     }
 
 
-
-
-
-    static MainActivity getInstance(){
+    static MainActivity getInstance() {
         return instance;
     }
 
