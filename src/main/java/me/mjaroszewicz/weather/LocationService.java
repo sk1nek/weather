@@ -106,21 +106,26 @@ public class LocationService {
         return ret;
     }
 
-    private String selectFormattedAddress(List<String> formattedAddresses){
-        if(formattedAddresses.size() >= 2) {
-            String ret = formattedAddresses.get(2);
-            int i = 2;
+    private String selectFormattedAddress(List<String> formattedAddresses) {
 
-            while (ret.length() > 20 && i < formattedAddresses.size()) {
-                i++;
-                ret = formattedAddresses.get(i);
-            }
+        if(formattedAddresses.isEmpty())
+            return "Unknown location";
 
-            return ret;
-
-        }
-        else
+        if (formattedAddresses.size() < 2) {
             return formattedAddresses.get(formattedAddresses.size() - 1);
+        }
+
+        String ret = formattedAddresses.get(2);
+        int i = 2;
+
+        while (ret.length() > 20 && i < formattedAddresses.size()) {
+            i++;
+            ret = formattedAddresses.get(i);
+        }
+
+        return ret;
+
+
     }
 
 }
