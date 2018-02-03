@@ -38,6 +38,22 @@ public class SettingsActivity extends AppCompatActivity implements SimpleDialog.
             MainActivity.getInstance().recreate();
 
         }
+
+        if(dialogTag.equals("tbcolor")){
+
+            //integer to hex
+            int color = extras.getInt("SimpleColorDialogcolor");
+            String hexColor = String.format("#%06x", (0xFFFFFF & color));
+
+            //color into prefs
+            SharedPreferences sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE);
+            sharedPreferences.edit().putString("toolbar_color", hexColor).apply();
+
+            //recreating main activity
+            MainActivity.getInstance().recreate();
+
+
+        }
         return true;
     }
 }

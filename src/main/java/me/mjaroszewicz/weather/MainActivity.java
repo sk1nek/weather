@@ -50,10 +50,17 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //changing background color
+        //changing background color according to prefs
         RelativeLayout main = findViewById(R.id.main);
         String hexColor = sharedPreferences.getString("background_color", "#303f9f");
         main.setBackgroundColor(Color.parseColor(hexColor));
+
+        //changing toolbar color according to preferences
+        String toolbarHexColor = sharedPreferences.getString("toolbar_color", "#303f9f");
+        toolbar.setBackgroundColor(Color.parseColor(toolbarHexColor));
+
+
+
 
 
         updateData();

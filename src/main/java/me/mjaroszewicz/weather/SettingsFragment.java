@@ -4,16 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.util.Log;
 import android.widget.Toast;
 
-import eltos.simpledialogfragment.SimpleDialog;
 import eltos.simpledialogfragment.color.SimpleColorDialog;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
@@ -35,6 +31,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         Preference backgroundColorPickerPreference = buildBackgroundColorPreference(getActivity());
         pc.addPreference(backgroundColorPickerPreference);
+
+        Preference toolbarColorPickerPreference = buildToolbarColorPreference(getActivity());
+        pc.addPreference(toolbarColorPickerPreference);
 
         this.setPreferenceScreen(pc);
         this.setHasOptionsMenu(true);
@@ -65,7 +64,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         return ret;
     }
 
-    private Preference buildBackgroundColorPreference(final Activity activity){
+    private Preference buildBackgroundColorPreference(final Activity activity) {
 
         final Preference ret = new Preference(activity);
         final SharedPreferences sharedPreferences = activity.getSharedPreferences("settings", Context.MODE_PRIVATE);
@@ -86,6 +85,35 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 SimpleColorDialog colorDialog = new SimpleColorDialog();
 
                 colorDialog.show(fm.findFragmentByTag("settings"), "bgcolor");
+
+                return false;
+            }
+        });
+
+
+        return ret;
+    }
+
+    private Preference buildToolbarColorPreference(final Activity activity){
+
+        final Preference ret = new Preference(activity);
+        final SharedPreferences sharedPreferences = activity.getSharedPreferences("settings", Context.MODE_PRIVATE);
+
+        ret.setEnabled(true);
+        ret.setTitle("Toolbar color");
+
+        String currentColor = sharedPreferences.getString("toolbar_color", "#303f9f");
+        ret.setSummary("Current: " + currentColor);
+
+        ret.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+
+                SimpleColorDialog colorDialog = new SimpleColorDialog();
+
+                colorDialog.show(fm.findFragmentByTag("settings"), "tbcolor");
 
                 return false;
             }
