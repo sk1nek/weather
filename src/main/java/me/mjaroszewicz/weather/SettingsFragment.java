@@ -35,6 +35,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         Preference toolbarColorPickerPreference = buildToolbarColorPreference(getActivity());
         pc.addPreference(toolbarColorPickerPreference);
 
+        Preference statusBarColorPickerPreference = buildStatusBarColorPreference(getActivity());
+        pc.addPreference(statusBarColorPickerPreference);
+
         this.setPreferenceScreen(pc);
         this.setHasOptionsMenu(true);
     }
@@ -114,6 +117,36 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 SimpleColorDialog colorDialog = new SimpleColorDialog();
 
                 colorDialog.show(fm.findFragmentByTag("settings"), "tbcolor");
+
+                return false;
+            }
+        });
+
+
+
+        return ret;
+    }
+
+    private Preference buildStatusBarColorPreference(final Activity activity){
+
+        final Preference ret = new Preference(activity);
+        final SharedPreferences sharedPreferences = activity.getSharedPreferences("settings", Context.MODE_PRIVATE);
+
+        ret.setEnabled(true);
+        ret.setTitle("Status Bar color");
+
+        String currentColor = sharedPreferences.getString("statusbar_color", "#303f9f");
+        ret.setSummary("Current: " + currentColor);
+
+        ret.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+
+                SimpleColorDialog colorDialog = new SimpleColorDialog();
+
+                colorDialog.show(fm.findFragmentByTag("settings"), "sbcolor");
 
                 return false;
             }

@@ -52,7 +52,18 @@ public class SettingsActivity extends AppCompatActivity implements SimpleDialog.
             //recreating main activity
             MainActivity.getInstance().recreate();
 
+        }
 
+        if (dialogTag.equals("sbcolor")) {
+
+            //int to hex
+            int color = extras.getInt("SimpleColorDialogcolor");
+            String hexColor = String.format("#%06x", (0xFFFFFF & color));
+
+            SharedPreferences sp = getSharedPreferences("settings", MODE_PRIVATE);
+            sp.edit().putString("statusbar_color", hexColor).apply();
+
+            MainActivity.getInstance().recreate();
         }
         return true;
     }

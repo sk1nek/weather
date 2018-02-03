@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -59,8 +60,10 @@ public class MainActivity extends AppCompatActivity {
         String toolbarHexColor = sharedPreferences.getString("toolbar_color", "#303f9f");
         toolbar.setBackgroundColor(Color.parseColor(toolbarHexColor));
 
-
-
+        //changing status bar color according to preferences
+        String statusBarHexColor = sharedPreferences.getString("statusbar_color", "#303f9f");
+        Window window = getWindow();
+        window.setStatusBarColor(Color.parseColor(statusBarHexColor));
 
 
         updateData();
