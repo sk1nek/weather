@@ -4,23 +4,28 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
+import android.util.Log;
 import android.widget.Toast;
 
-public class SettingsFragment extends PreferenceFragment {
+import eltos.simpledialogfragment.SimpleDialog;
+import eltos.simpledialogfragment.color.SimpleColorDialog;
+
+public class SettingsFragment extends PreferenceFragmentCompat {
 
     final private int SELECT_LOCATION_ACTION = 12321;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+
         addPreferencesFromResource(R.xml.pref);
 
-        PreferenceScreen pc = getPreferenceScreen();
+        android.support.v7.preference.PreferenceScreen pc = getPreferenceScreen();
 
         Preference locationPreference = buildLocationPreference(getActivity());
         pc.addPreference(locationPreference);
@@ -28,9 +33,11 @@ public class SettingsFragment extends PreferenceFragment {
         Preference temperatureScalePreference = buildTemperaturePreference(getActivity());
         pc.addPreference(temperatureScalePreference);
 
+        Preference backgroundColorPickerPreference = buildBackgroundColorPreference(getActivity());
+        pc.addPreference(backgroundColorPickerPreference);
+
         this.setPreferenceScreen(pc);
         this.setHasOptionsMenu(true);
-
     }
 
     private Preference buildLocationPreference(final Activity activity){
@@ -54,6 +61,37 @@ public class SettingsFragment extends PreferenceFragment {
                 return true;
             }
         });
+
+        return ret;
+    }
+
+    private Preference buildBackgroundColorPreference(final Activity activity){
+
+        final Preference ret = new Preference(activity);
+        final SharedPreferences sharedPreferences = activity.getSharedPreferences("settings", Context.MODE_PRIVATE);
+        final SettingsFragment settingsFragment = this;
+
+        ret.setEnabled(true);
+        ret.setTitle("Background color");
+
+        String currentColor = sharedPreferences.getString("background_color", "#303f9f");
+        ret.setSummary("Current: " + currentColor);
+
+        ret.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+
+                SimpleColorDialog colorDialog = new SimpleColorDialog();
+
+                colorDialog.show(fm.findFragmentByTag("settings"), "bgcolor");
+
+                return false;
+            }
+        });
+
+
 
         return ret;
     }
@@ -112,4 +150,6 @@ public class SettingsFragment extends PreferenceFragment {
 
 
     }
+
+
 }

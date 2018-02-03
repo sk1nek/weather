@@ -56,8 +56,6 @@ public class ForecastRecyclerAdapter extends RecyclerView.Adapter<ForecastViewHo
         String timeString = date.getHours() + ":00";
         holder.timeTextView.setText(timeString);
 
-        Log.w("DATETIME", time + " ");
-
         //temperature
         SharedPreferences sharedPreferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
         String temperatureScale = sharedPreferences.getString("temperature_scale", "celsius");

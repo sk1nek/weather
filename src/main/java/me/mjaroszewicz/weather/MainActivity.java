@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,10 +50,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //changing background color
+        RelativeLayout main = findViewById(R.id.main);
+        String hexColor = sharedPreferences.getString("background_color", "#303f9f");
+        main.setBackgroundColor(Color.parseColor(hexColor));
+
+
         updateData();
         initUpdateExecutor();
 
     }
+
+
 
 
     @Override
@@ -162,8 +172,6 @@ public class MainActivity extends AppCompatActivity {
 
         );
     }
-
-
 
 
     static MainActivity getInstance() {
