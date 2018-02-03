@@ -86,6 +86,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
 
                 SimpleColorDialog colorDialog = new SimpleColorDialog();
+                colorDialog.allowCustom(true);
 
                 colorDialog.show(fm.findFragmentByTag("settings"), "bgcolor");
 
@@ -115,6 +116,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
 
                 SimpleColorDialog colorDialog = new SimpleColorDialog();
+                colorDialog.allowCustom(true);
 
                 colorDialog.show(fm.findFragmentByTag("settings"), "tbcolor");
 
@@ -145,6 +147,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
 
                 SimpleColorDialog colorDialog = new SimpleColorDialog();
+                colorDialog.allowCustom(true);
 
                 colorDialog.show(fm.findFragmentByTag("settings"), "sbcolor");
 
